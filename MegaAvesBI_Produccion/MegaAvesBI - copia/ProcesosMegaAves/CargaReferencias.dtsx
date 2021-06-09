@@ -1,0 +1,2721 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="2/25/2016 9:43:42 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="PORT019"
+  DTS:CreatorName="LOGICSTUDIO\glayedra"
+  DTS:Description="SSIS Package Description"
+  DTS:DTSID="{D18A0657-2851-4A9C-8BE9-95CB2638F852}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="12.0.4100.1"
+  DTS:LocaleID="3082"
+  DTS:MaxErrorCount="0"
+  DTS:ObjectName="CargaReferencias"
+  DTS:VersionBuild="31"
+  DTS:VersionGUID="{D24104FA-C0BF-4302-850C-CAE11D2DA5B3}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{521EF492-BD92-46E1-BA8E-A8D86562B09C}"
+      DTS:ObjectName="DestinationConnectionOLEDB">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=192.168.30.2\SRVBDMEGAAVES;Initial Catalog=MegaAves;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=false;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SourceConnectionExcel]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{6D9DCCFA-A536-42F8-8E6B-8D7853B5AAF9}"
+      DTS:ObjectName="SourceConnectionExcel">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\DeployMegaAvesBI\Produccion\Copia de Registro Matriz.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Actualización Información Referencial"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{20738B97-0B36-40E1-AC84-48F2AB2D38DD}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Actualización Información Referencial"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{521EF492-BD92-46E1-BA8E-A8D86562B09C}"
+          SQLTask:SqlStatementSource="--MACHOS&#xA;update dl&#xA;set DatosReferenciaMachoPeso = m.Peso,&#xA;&#x9;DatosReferenciaMachoConversion = m.Conversion,&#xA;&#x9;DatosReferenciaMachoGanancia = m.Ganancia&#xA;from DetalleLote dl&#xA;inner join machos m on dl.Edad  = m.edad&#xA;inner join Lote l on dl.IdLote = l.IdLote&#xA;&#x9;&#x9;and l.FechaCreacion &gt;= '2015-06-01'&#xA;&#x9;&#x9;and m.Anio = 2015&#xA;&#xA;update dl&#xA;set DatosReferenciaMachoPeso = m.Peso,&#xA;&#x9;DatosReferenciaMachoConversion = m.Conversion,&#xA;&#x9;DatosReferenciaMachoGanancia = m.Ganancia&#xA;from DetalleLote dl&#xA;inner join machos m on dl.Edad  = m.edad&#xA;inner join Lote l on dl.IdLote = l.IdLote&#xA;&#x9;&#x9;and l.FechaCreacion &lt; '2015-06-01'&#xA;&#x9;&#x9;and m.Anio = 2012&#xA;&#xA;--HEMBRAS&#xA;update dl&#xA;set DatosReferenciaHembraPeso = h.Peso,&#xA;&#x9;DatosReferenciaHembraConversion = h.Conversion,&#xA;&#x9;DatosReferenciaHembraGanancia = h.Ganancia&#xA;from DetalleLote dl&#xA;inner join HEMBRAS h on dl.Edad  = h.edad&#xA;inner join Lote l on dl.IdLote = l.IdLote&#xA;&#x9;and l.FechaCreacion &gt;= '2015-06-01'&#xA;&#x9;&#x9;and h.Anio = 2015&#xA;&#xA;update dl&#xA;set DatosReferenciaHembraPeso = h.Peso,&#xA;&#x9;DatosReferenciaHembraConversion = h.Conversion,&#xA;&#x9;DatosReferenciaHembraGanancia = h.Ganancia&#xA;from DetalleLote dl&#xA;inner join HEMBRAS h on dl.Edad  = h.edad&#xA;inner join Lote l on dl.IdLote = l.IdLote&#xA;&#x9;and l.FechaCreacion &lt; '2015-06-01'&#xA;&#x9;&#x9;and h.Anio = 2012&#xA;&#xA;--MIXTOS&#xA;update dl&#xA;set DatosReferenciaMixtoPeso = mi.Peso,&#xA;&#x9;DatosReferenciaMixtoConversion = mi.Conversion,&#xA;&#x9;DatosReferenciaMixtoGanancia = mi.Ganancia,&#xA;&#x9;GramosDia = mi.consumoalimentodiario,&#xA;&#x9;AcumuladoGramosDia = mi.consumoacumuladoalimento&#xA;from DetalleLote dl&#xA;inner join MIXTOS mi on dl.Edad  = mi.edad&#xA;inner join Lote l on dl.IdLote = l.IdLote&#xA;&#x9;&#x9;and l.FechaCreacion &gt;= '2015-06-01'&#xA;&#x9;&#x9;and mi.Anio = 2015&#xA;&#xA;update dl&#xA;set DatosReferenciaMixtoPeso = mi.Peso,&#xA;&#x9;DatosReferenciaMixtoConversion = mi.Conversion,&#xA;&#x9;DatosReferenciaMixtoGanancia = mi.Ganancia,&#xA;&#x9;GramosDia = mi.consumoalimentodiario,&#xA;&#x9;AcumuladoGramosDia = mi.consumoacumuladoalimento&#xA;from DetalleLote dl&#xA;inner join MIXTOS mi on dl.Edad  = mi.edad&#xA;inner join Lote l on dl.IdLote = l.IdLote&#xA;&#x9;&#x9;and l.FechaCreacion &lt; '2015-06-01'&#xA;&#x9;&#x9;and mi.Anio = 2012&#xA;&#xA;update dl&#xA;set Sacos = (convert(decimal(18,3),CantidadPollos) * convert(decimal(18,3),dl.GramosDia) )/40000&#xA;from DetalleLote dl&#xA;inner join Lote l on dl.IdLote  = l.IdLote&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Cargar Información Referencial"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{EB10D974-814E-4AD6-AEB8-677D7F555C21}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:FailPackageOnFailure="True"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Cargar Información Referencial"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          defaultBufferSize="3145728"
+          version="1">
+          <components>
+            <component
+              refId="Package\Cargar Información Referencial\Destination - Hembras"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Destination - Hembras"
+              usesDispositions="true"
+              validateExternalMetadata="False"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Hembras]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Cargar Información Referencial\Destination - Hembras.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+                  connectionManagerRefId="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Cargar Información Referencial\Destination - Hembras.Inputs[Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\Destination - Hembras.Inputs[Destination Input].Columns[Edad]"
+                      cachedDataType="r8"
+                      cachedName="Edad"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Destination - Hembras.Inputs[Destination Input].ExternalColumns[Edad]"
+                      lineageId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].Columns[Edad]" />
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\Destination - Hembras.Inputs[Destination Input].Columns[Peso]"
+                      cachedDataType="r8"
+                      cachedName="Peso"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Destination - Hembras.Inputs[Destination Input].ExternalColumns[Peso]"
+                      lineageId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].Columns[Peso]" />
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\Destination - Hembras.Inputs[Destination Input].Columns[Ganancia]"
+                      cachedDataType="r8"
+                      cachedName="Ganancia"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Destination - Hembras.Inputs[Destination Input].ExternalColumns[Ganancia]"
+                      lineageId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].Columns[Ganancia]" />
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\Destination - Hembras.Inputs[Destination Input].Columns[Promedio Ganancia]"
+                      cachedDataType="r8"
+                      cachedName="Promedio Ganancia"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Destination - Hembras.Inputs[Destination Input].ExternalColumns[Promedio Ganancia]"
+                      lineageId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].Columns[Promedio Ganancia]" />
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\Destination - Hembras.Inputs[Destination Input].Columns[Conversion]"
+                      cachedDataType="r8"
+                      cachedName="Conversion"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Destination - Hembras.Inputs[Destination Input].ExternalColumns[Conversion]"
+                      lineageId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].Columns[Conversion]" />
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\Destination - Hembras.Inputs[Destination Input].Columns[ConsumoAlimentoDiario]"
+                      cachedDataType="r8"
+                      cachedName="ConsumoAlimentoDiario"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Destination - Hembras.Inputs[Destination Input].ExternalColumns[ConsumoAlimentoDiario]"
+                      lineageId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].Columns[ConsumoAlimentoDiario]" />
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\Destination - Hembras.Inputs[Destination Input].Columns[ConsumoAcumuladoAlimento]"
+                      cachedDataType="r8"
+                      cachedName="ConsumoAcumuladoAlimento"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Destination - Hembras.Inputs[Destination Input].ExternalColumns[ConsumoAcumuladoAlimento]"
+                      lineageId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].Columns[ConsumoAcumuladoAlimento]" />
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\Destination - Hembras.Inputs[Destination Input].Columns[Anio]"
+                      cachedDataType="r8"
+                      cachedName="Anio"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Destination - Hembras.Inputs[Destination Input].ExternalColumns[Anio]"
+                      lineageId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].Columns[Anio]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Destination - Hembras.Inputs[Destination Input].ExternalColumns[Edad]"
+                      dataType="r8"
+                      name="Edad" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Destination - Hembras.Inputs[Destination Input].ExternalColumns[Peso]"
+                      dataType="r8"
+                      name="Peso" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Destination - Hembras.Inputs[Destination Input].ExternalColumns[Ganancia]"
+                      dataType="r8"
+                      name="Ganancia" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Destination - Hembras.Inputs[Destination Input].ExternalColumns[Promedio Ganancia]"
+                      dataType="r8"
+                      name="Promedio Ganancia" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Destination - Hembras.Inputs[Destination Input].ExternalColumns[Conversion]"
+                      dataType="r8"
+                      name="Conversion" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Destination - Hembras.Inputs[Destination Input].ExternalColumns[ConsumoAlimentoDiario]"
+                      dataType="r8"
+                      name="ConsumoAlimentoDiario" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Destination - Hembras.Inputs[Destination Input].ExternalColumns[ConsumoAcumuladoAlimento]"
+                      dataType="r8"
+                      name="ConsumoAcumuladoAlimento" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Destination - Hembras.Inputs[Destination Input].ExternalColumns[Anio]"
+                      dataType="i4"
+                      name="Anio" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Cargar Información Referencial\Destination - Hembras.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Cargar Información Referencial\Destination - Hembras.Inputs[Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Destination - Hembras.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Cargar Información Referencial\Destination - Hembras.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Destination - Hembras.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Cargar Información Referencial\Destination - Hembras.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Cargar Información Referencial\Destination 1 - Machos"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Destination 1 - Machos"
+              usesDispositions="true"
+              validateExternalMetadata="False"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Machos]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Cargar Información Referencial\Destination 1 - Machos.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+                  connectionManagerRefId="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Cargar Información Referencial\Destination 1 - Machos.Inputs[Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\Destination 1 - Machos.Inputs[Destination Input].Columns[Edad]"
+                      cachedDataType="r8"
+                      cachedName="Edad"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Destination 1 - Machos.Inputs[Destination Input].ExternalColumns[Edad]"
+                      lineageId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].Columns[Edad]" />
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\Destination 1 - Machos.Inputs[Destination Input].Columns[Peso]"
+                      cachedDataType="r8"
+                      cachedName="Peso"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Destination 1 - Machos.Inputs[Destination Input].ExternalColumns[Peso]"
+                      lineageId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].Columns[Peso]" />
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\Destination 1 - Machos.Inputs[Destination Input].Columns[Ganancia]"
+                      cachedDataType="r8"
+                      cachedName="Ganancia"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Destination 1 - Machos.Inputs[Destination Input].ExternalColumns[Ganancia]"
+                      lineageId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].Columns[Ganancia]" />
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\Destination 1 - Machos.Inputs[Destination Input].Columns[Promedio Ganancia]"
+                      cachedDataType="r8"
+                      cachedName="Promedio Ganancia"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Destination 1 - Machos.Inputs[Destination Input].ExternalColumns[Promedio Ganancia]"
+                      lineageId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].Columns[Promedio Ganancia]" />
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\Destination 1 - Machos.Inputs[Destination Input].Columns[Conversion]"
+                      cachedDataType="r8"
+                      cachedName="Conversion"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Destination 1 - Machos.Inputs[Destination Input].ExternalColumns[Conversion]"
+                      lineageId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].Columns[Conversion]" />
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\Destination 1 - Machos.Inputs[Destination Input].Columns[ConsumoAlimentoDiario]"
+                      cachedDataType="r8"
+                      cachedName="ConsumoAlimentoDiario"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Destination 1 - Machos.Inputs[Destination Input].ExternalColumns[ConsumoAlimentoDiario]"
+                      lineageId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].Columns[ConsumoAlimentoDiario]" />
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\Destination 1 - Machos.Inputs[Destination Input].Columns[ConsumoAcumuladoAlimento]"
+                      cachedDataType="r8"
+                      cachedName="ConsumoAcumuladoAlimento"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Destination 1 - Machos.Inputs[Destination Input].ExternalColumns[ConsumoAcumuladoAlimento]"
+                      lineageId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].Columns[ConsumoAcumuladoAlimento]" />
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\Destination 1 - Machos.Inputs[Destination Input].Columns[Anio]"
+                      cachedDataType="r8"
+                      cachedName="Anio"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Destination 1 - Machos.Inputs[Destination Input].ExternalColumns[Anio]"
+                      lineageId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].Columns[Anio]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Destination 1 - Machos.Inputs[Destination Input].ExternalColumns[Edad]"
+                      dataType="i4"
+                      name="Edad" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Destination 1 - Machos.Inputs[Destination Input].ExternalColumns[Peso]"
+                      dataType="r8"
+                      name="Peso" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Destination 1 - Machos.Inputs[Destination Input].ExternalColumns[Ganancia]"
+                      dataType="r8"
+                      name="Ganancia" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Destination 1 - Machos.Inputs[Destination Input].ExternalColumns[Promedio Ganancia]"
+                      dataType="r8"
+                      name="Promedio Ganancia" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Destination 1 - Machos.Inputs[Destination Input].ExternalColumns[Conversion]"
+                      dataType="r8"
+                      name="Conversion" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Destination 1 - Machos.Inputs[Destination Input].ExternalColumns[ConsumoAlimentoDiario]"
+                      dataType="r8"
+                      name="ConsumoAlimentoDiario" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Destination 1 - Machos.Inputs[Destination Input].ExternalColumns[ConsumoAcumuladoAlimento]"
+                      dataType="r8"
+                      name="ConsumoAcumuladoAlimento" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Destination 1 - Machos.Inputs[Destination Input].ExternalColumns[Anio]"
+                      dataType="i4"
+                      name="Anio" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Cargar Información Referencial\Destination 1 - Machos.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Cargar Información Referencial\Destination 1 - Machos.Inputs[Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Destination 1 - Machos.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Cargar Información Referencial\Destination 1 - Machos.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Destination 1 - Machos.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Cargar Información Referencial\Destination 1 - Machos.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Cargar Información Referencial\Destination 2 - Mixtos"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Destination 2 - Mixtos"
+              usesDispositions="true"
+              validateExternalMetadata="False"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Mixtos]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+                  connectionManagerRefId="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Inputs[Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Inputs[Destination Input].Columns[Edad]"
+                      cachedDataType="r8"
+                      cachedName="Edad"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Inputs[Destination Input].ExternalColumns[Edad]"
+                      lineageId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].Columns[Edad]" />
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Inputs[Destination Input].Columns[Peso]"
+                      cachedDataType="r8"
+                      cachedName="Peso"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Inputs[Destination Input].ExternalColumns[Peso]"
+                      lineageId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].Columns[Peso]" />
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Inputs[Destination Input].Columns[Ganancia]"
+                      cachedDataType="r8"
+                      cachedName="Ganancia"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Inputs[Destination Input].ExternalColumns[Ganancia]"
+                      lineageId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].Columns[Ganancia]" />
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Inputs[Destination Input].Columns[Promedio Ganancia]"
+                      cachedDataType="r8"
+                      cachedName="Promedio Ganancia"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Inputs[Destination Input].ExternalColumns[Promedio Ganancia]"
+                      lineageId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].Columns[Promedio Ganancia]" />
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Inputs[Destination Input].Columns[Conversion]"
+                      cachedDataType="r8"
+                      cachedName="Conversion"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Inputs[Destination Input].ExternalColumns[Conversion]"
+                      lineageId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].Columns[Conversion]" />
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Inputs[Destination Input].Columns[ConsumoAlimentoDiario]"
+                      cachedDataType="r8"
+                      cachedName="ConsumoAlimentoDiario"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Inputs[Destination Input].ExternalColumns[ConsumoAlimentoDiario]"
+                      lineageId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].Columns[ConsumoAlimentoDiario]" />
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Inputs[Destination Input].Columns[ConsumoAcumuladoAlimento]"
+                      cachedDataType="r8"
+                      cachedName="ConsumoAcumuladoAlimento"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Inputs[Destination Input].ExternalColumns[ConsumoAcumuladoAlimento]"
+                      lineageId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].Columns[ConsumoAcumuladoAlimento]" />
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Inputs[Destination Input].Columns[Anio]"
+                      cachedDataType="r8"
+                      cachedName="Anio"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Inputs[Destination Input].ExternalColumns[Anio]"
+                      lineageId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].Columns[Anio]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Inputs[Destination Input].ExternalColumns[Edad]"
+                      dataType="r8"
+                      name="Edad" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Inputs[Destination Input].ExternalColumns[Peso]"
+                      dataType="r8"
+                      name="Peso" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Inputs[Destination Input].ExternalColumns[Ganancia]"
+                      dataType="r8"
+                      name="Ganancia" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Inputs[Destination Input].ExternalColumns[Promedio Ganancia]"
+                      dataType="r8"
+                      name="Promedio Ganancia" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Inputs[Destination Input].ExternalColumns[Conversion]"
+                      dataType="r8"
+                      name="Conversion" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Inputs[Destination Input].ExternalColumns[ConsumoAlimentoDiario]"
+                      dataType="r8"
+                      name="ConsumoAlimentoDiario" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Inputs[Destination Input].ExternalColumns[ConsumoAcumuladoAlimento]"
+                      dataType="r8"
+                      name="ConsumoAcumuladoAlimento" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Inputs[Destination Input].ExternalColumns[Anio]"
+                      dataType="i4"
+                      name="Anio" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Inputs[Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Cargar Información Referencial\LookupH"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="LookupH"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[Hembras]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[Hembras]) [refTable]
+where [refTable].[Edad] = ? and [refTable].[Anio] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="Edad" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Peso" dataType="DT_R8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Ganancia" dataType="DT_R8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Promedio Ganancia" dataType="DT_R8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Conversion" dataType="DT_R8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ConsumoAlimentoDiario" dataType="DT_R8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ConsumoAcumuladoAlimento" dataType="DT_R8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Anio" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Cargar Información Referencial\Transformar DatosH.Outputs[Data Conversion Output].Columns[EdadConverted]};#{Package\Cargar Información Referencial\Transformar DatosH.Outputs[Data Conversion Output].Columns[AnioConverted]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Cargar Información Referencial\LookupH.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+                  connectionManagerRefId="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Cargar Información Referencial\LookupH.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\LookupH.Inputs[Lookup Input].Columns[EdadConverted]"
+                      cachedDataType="i4"
+                      cachedName="EdadConverted"
+                      lineageId="Package\Cargar Información Referencial\Transformar DatosH.Outputs[Data Conversion Output].Columns[EdadConverted]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">Edad</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\LookupH.Inputs[Lookup Input].Columns[AnioConverted]"
+                      cachedDataType="i4"
+                      cachedName="AnioConverted"
+                      lineageId="Package\Cargar Información Referencial\Transformar DatosH.Outputs[Data Conversion Output].Columns[AnioConverted]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">Anio</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Cargar Información Referencial\LookupH.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Cargar Información Referencial\LookupH.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Cargar Información Referencial\LookupH.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Cargar Información Referencial\LookupH.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Cargar Información Referencial\LookupH.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Cargar Información Referencial\LookupH.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\LookupH.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Cargar Información Referencial\LookupH.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\LookupH.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Cargar Información Referencial\LookupH.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Cargar Información Referencial\LookupM"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="LookupM"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[Machos]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[Machos]) [refTable]
+where [refTable].[Edad] = ? and [refTable].[Anio] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="Edad" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Peso" dataType="DT_R8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Ganancia" dataType="DT_R8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Promedio Ganancia" dataType="DT_R8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Conversion" dataType="DT_R8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ConsumoAlimentoDiario" dataType="DT_R8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ConsumoAcumuladoAlimento" dataType="DT_R8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Anio" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Cargar Información Referencial\Transformar DatosM.Outputs[Data Conversion Output].Columns[EdadConverted]};#{Package\Cargar Información Referencial\Transformar DatosM.Outputs[Data Conversion Output].Columns[AnioConverted]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Cargar Información Referencial\LookupM.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+                  connectionManagerRefId="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Cargar Información Referencial\LookupM.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\LookupM.Inputs[Lookup Input].Columns[EdadConverted]"
+                      cachedDataType="i4"
+                      cachedName="EdadConverted"
+                      lineageId="Package\Cargar Información Referencial\Transformar DatosM.Outputs[Data Conversion Output].Columns[EdadConverted]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">Edad</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\LookupM.Inputs[Lookup Input].Columns[AnioConverted]"
+                      cachedDataType="i4"
+                      cachedName="AnioConverted"
+                      lineageId="Package\Cargar Información Referencial\Transformar DatosM.Outputs[Data Conversion Output].Columns[AnioConverted]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">Anio</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Cargar Información Referencial\LookupM.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Cargar Información Referencial\LookupM.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Cargar Información Referencial\LookupM.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Cargar Información Referencial\LookupM.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Cargar Información Referencial\LookupM.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Cargar Información Referencial\LookupM.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\LookupM.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Cargar Información Referencial\LookupM.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\LookupM.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Cargar Información Referencial\LookupM.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Cargar Información Referencial\LookupMi"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="LookupMi"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[Mixtos]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[Mixtos]) [refTable]
+where [refTable].[Edad] = ? and [refTable].[Anio] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="Edad" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Peso" dataType="DT_R8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Ganancia" dataType="DT_R8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Promedio Ganancia" dataType="DT_R8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Conversion" dataType="DT_R8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ConsumoAlimentoDiario" dataType="DT_R8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ConsumoAcumuladoAlimento" dataType="DT_R8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="Anio" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Cargar Información Referencial\Transformar DatosMi.Outputs[Data Conversion Output].Columns[EdadConverted]};#{Package\Cargar Información Referencial\Transformar DatosMi.Outputs[Data Conversion Output].Columns[AnioConverted]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Cargar Información Referencial\LookupMi.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+                  connectionManagerRefId="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Cargar Información Referencial\LookupMi.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\LookupMi.Inputs[Lookup Input].Columns[EdadConverted]"
+                      cachedDataType="i4"
+                      cachedName="EdadConverted"
+                      lineageId="Package\Cargar Información Referencial\Transformar DatosMi.Outputs[Data Conversion Output].Columns[EdadConverted]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">Edad</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\LookupMi.Inputs[Lookup Input].Columns[AnioConverted]"
+                      cachedDataType="i4"
+                      cachedName="AnioConverted"
+                      lineageId="Package\Cargar Información Referencial\Transformar DatosMi.Outputs[Data Conversion Output].Columns[AnioConverted]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">Anio</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Cargar Información Referencial\LookupMi.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Cargar Información Referencial\LookupMi.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Cargar Información Referencial\LookupMi.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Cargar Información Referencial\LookupMi.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Cargar Información Referencial\LookupMi.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Cargar Información Referencial\LookupMi.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\LookupMi.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Cargar Información Referencial\LookupMi.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\LookupMi.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Cargar Información Referencial\LookupMi.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Cargar Información Referencial\Source - Hembras$"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Source - Hembras$"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">Hembras$</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Cargar Información Referencial\Source - Hembras$.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SourceConnectionExcel]"
+                  connectionManagerRefId="Package.ConnectionManagers[SourceConnectionExcel]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].Columns[Edad]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].ExternalColumns[Edad]"
+                      lineageId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].Columns[Edad]"
+                      name="Edad"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].Columns[Peso]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].ExternalColumns[Peso]"
+                      lineageId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].Columns[Peso]"
+                      name="Peso"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].Columns[Ganancia]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].ExternalColumns[Ganancia]"
+                      lineageId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].Columns[Ganancia]"
+                      name="Ganancia"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].Columns[Promedio Ganancia]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].ExternalColumns[Promedio Ganancia]"
+                      lineageId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].Columns[Promedio Ganancia]"
+                      name="Promedio Ganancia"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].Columns[Conversion]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].ExternalColumns[Conversion]"
+                      lineageId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].Columns[Conversion]"
+                      name="Conversion"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].Columns[ConsumoAlimentoDiario]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].ExternalColumns[ConsumoAlimentoDiario]"
+                      lineageId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].Columns[ConsumoAlimentoDiario]"
+                      name="ConsumoAlimentoDiario"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].Columns[ConsumoAcumuladoAlimento]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].ExternalColumns[ConsumoAcumuladoAlimento]"
+                      lineageId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].Columns[ConsumoAcumuladoAlimento]"
+                      name="ConsumoAcumuladoAlimento"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].Columns[Anio]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].ExternalColumns[Anio]"
+                      lineageId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].Columns[Anio]"
+                      name="Anio"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].ExternalColumns[Edad]"
+                      dataType="r8"
+                      name="Edad" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].ExternalColumns[Peso]"
+                      dataType="r8"
+                      name="Peso" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].ExternalColumns[Ganancia]"
+                      dataType="r8"
+                      name="Ganancia" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].ExternalColumns[Promedio Ganancia]"
+                      dataType="r8"
+                      name="Promedio Ganancia" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].ExternalColumns[Conversion]"
+                      dataType="r8"
+                      name="Conversion" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].ExternalColumns[ConsumoAlimentoDiario]"
+                      dataType="r8"
+                      name="ConsumoAlimentoDiario" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].ExternalColumns[ConsumoAcumuladoAlimento]"
+                      dataType="r8"
+                      name="ConsumoAcumuladoAlimento" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].ExternalColumns[Anio]"
+                      dataType="r8"
+                      name="Anio" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Error Output].Columns[Edad]"
+                      dataType="r8"
+                      lineageId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Error Output].Columns[Edad]"
+                      name="Edad" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Error Output].Columns[Peso]"
+                      dataType="r8"
+                      lineageId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Error Output].Columns[Peso]"
+                      name="Peso" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Error Output].Columns[Ganancia]"
+                      dataType="r8"
+                      lineageId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Error Output].Columns[Ganancia]"
+                      name="Ganancia" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Error Output].Columns[Promedio Ganancia]"
+                      dataType="r8"
+                      lineageId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Error Output].Columns[Promedio Ganancia]"
+                      name="Promedio Ganancia" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Error Output].Columns[Conversion]"
+                      dataType="r8"
+                      lineageId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Error Output].Columns[Conversion]"
+                      name="Conversion" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Error Output].Columns[ConsumoAlimentoDiario]"
+                      dataType="r8"
+                      lineageId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Error Output].Columns[ConsumoAlimentoDiario]"
+                      name="ConsumoAlimentoDiario" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Error Output].Columns[ConsumoAcumuladoAlimento]"
+                      dataType="r8"
+                      lineageId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Error Output].Columns[ConsumoAcumuladoAlimento]"
+                      name="ConsumoAcumuladoAlimento" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Error Output].Columns[Anio]"
+                      dataType="r8"
+                      lineageId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Error Output].Columns[Anio]"
+                      name="Anio" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Cargar Información Referencial\Source 1 - Machos$"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Source 1 - Machos$"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">Machos$</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Cargar Información Referencial\Source 1 - Machos$.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SourceConnectionExcel]"
+                  connectionManagerRefId="Package.ConnectionManagers[SourceConnectionExcel]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].Columns[Edad]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].ExternalColumns[Edad]"
+                      lineageId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].Columns[Edad]"
+                      name="Edad"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].Columns[Peso]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].ExternalColumns[Peso]"
+                      lineageId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].Columns[Peso]"
+                      name="Peso"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].Columns[Ganancia]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].ExternalColumns[Ganancia]"
+                      lineageId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].Columns[Ganancia]"
+                      name="Ganancia"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].Columns[Promedio Ganancia]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].ExternalColumns[Promedio Ganancia]"
+                      lineageId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].Columns[Promedio Ganancia]"
+                      name="Promedio Ganancia"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].Columns[Conversion]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].ExternalColumns[Conversion]"
+                      lineageId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].Columns[Conversion]"
+                      name="Conversion"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].Columns[ConsumoAlimentoDiario]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].ExternalColumns[ConsumoAlimentoDiario]"
+                      lineageId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].Columns[ConsumoAlimentoDiario]"
+                      name="ConsumoAlimentoDiario"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].Columns[ConsumoAcumuladoAlimento]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].ExternalColumns[ConsumoAcumuladoAlimento]"
+                      lineageId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].Columns[ConsumoAcumuladoAlimento]"
+                      name="ConsumoAcumuladoAlimento"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].Columns[Anio]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].ExternalColumns[Anio]"
+                      lineageId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].Columns[Anio]"
+                      name="Anio"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].ExternalColumns[Edad]"
+                      dataType="r8"
+                      name="Edad" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].ExternalColumns[Peso]"
+                      dataType="r8"
+                      name="Peso" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].ExternalColumns[Ganancia]"
+                      dataType="r8"
+                      name="Ganancia" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].ExternalColumns[Promedio Ganancia]"
+                      dataType="r8"
+                      name="Promedio Ganancia" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].ExternalColumns[Conversion]"
+                      dataType="r8"
+                      name="Conversion" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].ExternalColumns[ConsumoAlimentoDiario]"
+                      dataType="r8"
+                      name="ConsumoAlimentoDiario" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].ExternalColumns[ConsumoAcumuladoAlimento]"
+                      dataType="r8"
+                      name="ConsumoAcumuladoAlimento" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].ExternalColumns[Anio]"
+                      dataType="r8"
+                      name="Anio" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Error Output].Columns[Edad]"
+                      dataType="r8"
+                      lineageId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Error Output].Columns[Edad]"
+                      name="Edad" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Error Output].Columns[Peso]"
+                      dataType="r8"
+                      lineageId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Error Output].Columns[Peso]"
+                      name="Peso" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Error Output].Columns[Ganancia]"
+                      dataType="r8"
+                      lineageId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Error Output].Columns[Ganancia]"
+                      name="Ganancia" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Error Output].Columns[Promedio Ganancia]"
+                      dataType="r8"
+                      lineageId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Error Output].Columns[Promedio Ganancia]"
+                      name="Promedio Ganancia" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Error Output].Columns[Conversion]"
+                      dataType="r8"
+                      lineageId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Error Output].Columns[Conversion]"
+                      name="Conversion" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Error Output].Columns[ConsumoAlimentoDiario]"
+                      dataType="r8"
+                      lineageId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Error Output].Columns[ConsumoAlimentoDiario]"
+                      name="ConsumoAlimentoDiario" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Error Output].Columns[ConsumoAcumuladoAlimento]"
+                      dataType="r8"
+                      lineageId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Error Output].Columns[ConsumoAcumuladoAlimento]"
+                      name="ConsumoAcumuladoAlimento" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Error Output].Columns[Anio]"
+                      dataType="r8"
+                      lineageId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Error Output].Columns[Anio]"
+                      name="Anio" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Cargar Información Referencial\Source 2 - Mixtos$"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Source 2 - Mixtos$"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">Mixtos$</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SourceConnectionExcel]"
+                  connectionManagerRefId="Package.ConnectionManagers[SourceConnectionExcel]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].Columns[Edad]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].ExternalColumns[Edad]"
+                      lineageId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].Columns[Edad]"
+                      name="Edad"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].Columns[Peso]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].ExternalColumns[Peso]"
+                      lineageId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].Columns[Peso]"
+                      name="Peso"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].Columns[Ganancia]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].ExternalColumns[Ganancia]"
+                      lineageId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].Columns[Ganancia]"
+                      name="Ganancia"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].Columns[Promedio Ganancia]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].ExternalColumns[Promedio Ganancia]"
+                      lineageId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].Columns[Promedio Ganancia]"
+                      name="Promedio Ganancia"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].Columns[Conversion]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].ExternalColumns[Conversion]"
+                      lineageId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].Columns[Conversion]"
+                      name="Conversion"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].Columns[ConsumoAlimentoDiario]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].ExternalColumns[ConsumoAlimentoDiario]"
+                      lineageId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].Columns[ConsumoAlimentoDiario]"
+                      name="ConsumoAlimentoDiario"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].Columns[ConsumoAcumuladoAlimento]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].ExternalColumns[ConsumoAcumuladoAlimento]"
+                      lineageId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].Columns[ConsumoAcumuladoAlimento]"
+                      name="ConsumoAcumuladoAlimento"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].Columns[Anio]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].ExternalColumns[Anio]"
+                      lineageId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].Columns[Anio]"
+                      name="Anio"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].ExternalColumns[Edad]"
+                      dataType="r8"
+                      name="Edad" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].ExternalColumns[Peso]"
+                      dataType="r8"
+                      name="Peso" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].ExternalColumns[Ganancia]"
+                      dataType="r8"
+                      name="Ganancia" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].ExternalColumns[Promedio Ganancia]"
+                      dataType="r8"
+                      name="Promedio Ganancia" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].ExternalColumns[Conversion]"
+                      dataType="r8"
+                      name="Conversion" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].ExternalColumns[ConsumoAlimentoDiario]"
+                      dataType="r8"
+                      name="ConsumoAlimentoDiario" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].ExternalColumns[ConsumoAcumuladoAlimento]"
+                      dataType="r8"
+                      name="ConsumoAcumuladoAlimento" />
+                    <externalMetadataColumn
+                      refId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].ExternalColumns[Anio]"
+                      dataType="r8"
+                      name="Anio" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Error Output].Columns[Edad]"
+                      dataType="r8"
+                      lineageId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Error Output].Columns[Edad]"
+                      name="Edad" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Error Output].Columns[Peso]"
+                      dataType="r8"
+                      lineageId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Error Output].Columns[Peso]"
+                      name="Peso" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Error Output].Columns[Ganancia]"
+                      dataType="r8"
+                      lineageId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Error Output].Columns[Ganancia]"
+                      name="Ganancia" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Error Output].Columns[Promedio Ganancia]"
+                      dataType="r8"
+                      lineageId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Error Output].Columns[Promedio Ganancia]"
+                      name="Promedio Ganancia" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Error Output].Columns[Conversion]"
+                      dataType="r8"
+                      lineageId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Error Output].Columns[Conversion]"
+                      name="Conversion" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Error Output].Columns[ConsumoAlimentoDiario]"
+                      dataType="r8"
+                      lineageId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Error Output].Columns[ConsumoAlimentoDiario]"
+                      name="ConsumoAlimentoDiario" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Error Output].Columns[ConsumoAcumuladoAlimento]"
+                      dataType="r8"
+                      lineageId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Error Output].Columns[ConsumoAcumuladoAlimento]"
+                      name="ConsumoAcumuladoAlimento" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Error Output].Columns[Anio]"
+                      dataType="r8"
+                      lineageId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Error Output].Columns[Anio]"
+                      name="Anio" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Cargar Información Referencial\Transformar DatosH"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Transformar DatosH"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Cargar Información Referencial\Transformar DatosH.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\Transformar DatosH.Inputs[Data Conversion Input].Columns[Edad]"
+                      cachedDataType="r8"
+                      cachedName="Edad"
+                      lineageId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].Columns[Edad]" />
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\Transformar DatosH.Inputs[Data Conversion Input].Columns[Anio]"
+                      cachedDataType="r8"
+                      cachedName="Anio"
+                      lineageId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].Columns[Anio]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Cargar Información Referencial\Transformar DatosH.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Cargar Información Referencial\Transformar DatosH.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Transformar DatosH.Outputs[Data Conversion Output].Columns[EdadConverted]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Cargar Información Referencial\Transformar DatosH.Outputs[Data Conversion Output].Columns[EdadConverted]"
+                      name="EdadConverted"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].Columns[Edad]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Transformar DatosH.Outputs[Data Conversion Output].Columns[AnioConverted]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Cargar Información Referencial\Transformar DatosH.Outputs[Data Conversion Output].Columns[AnioConverted]"
+                      name="AnioConverted"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output].Columns[Anio]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Cargar Información Referencial\Transformar DatosH.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Cargar Información Referencial\Transformar DatosH.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Transformar DatosH.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Cargar Información Referencial\Transformar DatosH.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Transformar DatosH.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Cargar Información Referencial\Transformar DatosH.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Cargar Información Referencial\Transformar DatosM"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Transformar DatosM"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Cargar Información Referencial\Transformar DatosM.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\Transformar DatosM.Inputs[Data Conversion Input].Columns[Edad]"
+                      cachedDataType="r8"
+                      cachedName="Edad"
+                      lineageId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].Columns[Edad]" />
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\Transformar DatosM.Inputs[Data Conversion Input].Columns[Anio]"
+                      cachedDataType="r8"
+                      cachedName="Anio"
+                      lineageId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].Columns[Anio]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Cargar Información Referencial\Transformar DatosM.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Cargar Información Referencial\Transformar DatosM.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Transformar DatosM.Outputs[Data Conversion Output].Columns[EdadConverted]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Cargar Información Referencial\Transformar DatosM.Outputs[Data Conversion Output].Columns[EdadConverted]"
+                      name="EdadConverted"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].Columns[Edad]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Transformar DatosM.Outputs[Data Conversion Output].Columns[AnioConverted]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Cargar Información Referencial\Transformar DatosM.Outputs[Data Conversion Output].Columns[AnioConverted]"
+                      name="AnioConverted"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output].Columns[Anio]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Cargar Información Referencial\Transformar DatosM.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Cargar Información Referencial\Transformar DatosM.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Transformar DatosM.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Cargar Información Referencial\Transformar DatosM.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Transformar DatosM.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Cargar Información Referencial\Transformar DatosM.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Cargar Información Referencial\Transformar DatosMi"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Transformar DatosMi"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Cargar Información Referencial\Transformar DatosMi.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\Transformar DatosMi.Inputs[Data Conversion Input].Columns[Edad]"
+                      cachedDataType="r8"
+                      cachedName="Edad"
+                      lineageId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].Columns[Edad]" />
+                    <inputColumn
+                      refId="Package\Cargar Información Referencial\Transformar DatosMi.Inputs[Data Conversion Input].Columns[Anio]"
+                      cachedDataType="r8"
+                      cachedName="Anio"
+                      lineageId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].Columns[Anio]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Cargar Información Referencial\Transformar DatosMi.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Cargar Información Referencial\Transformar DatosMi.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Transformar DatosMi.Outputs[Data Conversion Output].Columns[EdadConverted]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Cargar Información Referencial\Transformar DatosMi.Outputs[Data Conversion Output].Columns[EdadConverted]"
+                      name="EdadConverted"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].Columns[Edad]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Transformar DatosMi.Outputs[Data Conversion Output].Columns[AnioConverted]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Cargar Información Referencial\Transformar DatosMi.Outputs[Data Conversion Output].Columns[AnioConverted]"
+                      name="AnioConverted"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output].Columns[Anio]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Cargar Información Referencial\Transformar DatosMi.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Cargar Información Referencial\Transformar DatosMi.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Transformar DatosMi.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Cargar Información Referencial\Transformar DatosMi.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Cargar Información Referencial\Transformar DatosMi.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Cargar Información Referencial\Transformar DatosMi.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Cargar Información Referencial.Paths[Data Conversion Output]"
+              endId="Package\Cargar Información Referencial\LookupM.Inputs[Lookup Input]"
+              name="Data Conversion Output"
+              startId="Package\Cargar Información Referencial\Transformar DatosM.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\Cargar Información Referencial.Paths[Data Conversion Output1]"
+              endId="Package\Cargar Información Referencial\LookupMi.Inputs[Lookup Input]"
+              name="Data Conversion Output"
+              startId="Package\Cargar Información Referencial\Transformar DatosMi.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\Cargar Información Referencial.Paths[Data Conversion Output2]"
+              endId="Package\Cargar Información Referencial\LookupH.Inputs[Lookup Input]"
+              name="Data Conversion Output"
+              startId="Package\Cargar Información Referencial\Transformar DatosH.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\Cargar Información Referencial.Paths[Excel Source Output]"
+              endId="Package\Cargar Información Referencial\Transformar DatosM.Inputs[Data Conversion Input]"
+              name="Excel Source Output"
+              startId="Package\Cargar Información Referencial\Source 1 - Machos$.Outputs[Excel Source Output]" />
+            <path
+              refId="Package\Cargar Información Referencial.Paths[Excel Source Output1]"
+              endId="Package\Cargar Información Referencial\Transformar DatosMi.Inputs[Data Conversion Input]"
+              name="Excel Source Output"
+              startId="Package\Cargar Información Referencial\Source 2 - Mixtos$.Outputs[Excel Source Output]" />
+            <path
+              refId="Package\Cargar Información Referencial.Paths[Excel Source Output2]"
+              endId="Package\Cargar Información Referencial\Transformar DatosH.Inputs[Data Conversion Input]"
+              name="Excel Source Output"
+              startId="Package\Cargar Información Referencial\Source - Hembras$.Outputs[Excel Source Output]" />
+            <path
+              refId="Package\Cargar Información Referencial.Paths[Lookup No Match Output]"
+              endId="Package\Cargar Información Referencial\Destination 1 - Machos.Inputs[Destination Input]"
+              name="Lookup No Match Output"
+              startId="Package\Cargar Información Referencial\LookupM.Outputs[Lookup No Match Output]" />
+            <path
+              refId="Package\Cargar Información Referencial.Paths[Lookup No Match Output1]"
+              endId="Package\Cargar Información Referencial\Destination 2 - Mixtos.Inputs[Destination Input]"
+              name="Lookup No Match Output"
+              startId="Package\Cargar Información Referencial\LookupMi.Outputs[Lookup No Match Output]" />
+            <path
+              refId="Package\Cargar Información Referencial.Paths[Lookup No Match Output2]"
+              endId="Package\Cargar Información Referencial\Destination - Hembras.Inputs[Destination Input]"
+              name="Lookup No Match Output"
+              startId="Package\Cargar Información Referencial\LookupH.Outputs[Lookup No Match Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Creación Tablas"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{E9F45E58-DD89-470B-98D9-EE837B71CDE7}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:FailPackageOnFailure="True"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Creación Tablas"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{521EF492-BD92-46E1-BA8E-A8D86562B09C}"
+          SQLTask:SqlStatementSource="if not exists (select 1 from sys.tables where name = 'Hembras')&#xA;CREATE TABLE [dbo].[Hembras] (&#xA;[Edad] int,&#xA;[Peso] float,&#xA;[Ganancia] float,&#xA;[Promedio Ganancia] float,&#xA;[Conversion] float,&#xA;[ConsumoAlimentoDiario] float,&#xA;[ConsumoAcumuladoAlimento] float,&#xA;[Anio] int&#xA;);&#xA;&#xA;&#xA;if not exists (select 1 from sys.tables where name = 'Machos')&#xA;CREATE TABLE [dbo].[Machos] (&#xA;[Edad] int,&#xA;[Peso] float,&#xA;[Ganancia] float,&#xA;[Promedio Ganancia] float,&#xA;[Conversion] float,&#xA;[ConsumoAlimentoDiario] float,&#xA;[ConsumoAcumuladoAlimento] float,&#xA;[Anio] int&#xA;);&#xA;&#xA;if not exists (select 1 from sys.tables where name = 'Mixtos')&#xA;CREATE TABLE [dbo].[Mixtos] (&#xA;[Edad] int,&#xA;[Peso] float,&#xA;[Ganancia] float,&#xA;[Promedio Ganancia] float,&#xA;[Conversion] float,&#xA;[ConsumoAlimentoDiario] float,&#xA;[ConsumoAcumuladoAlimento] float,&#xA;[Anio] int&#xA;);&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{0DF33709-F4D2-4C5D-8A7F-0689EC4070BE}"
+      DTS:From="Package\Cargar Información Referencial"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Actualización Información Referencial" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[{E4B46E0D-BC5B-4A93-8D45-BE9BDDBB4B32\}]"
+      DTS:CreationName=""
+      DTS:DTSID="{E4B46E0D-BC5B-4A93-8D45-BE9BDDBB4B32}"
+      DTS:From="Package\Creación Tablas"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="{E4B46E0D-BC5B-4A93-8D45-BE9BDDBB4B32}"
+      DTS:To="Package\Cargar Información Referencial" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="255,42"
+          Id="Package\Actualización Información Referencial"
+          TopLeft="150,280" />
+        <NodeLayout
+          Size="226,42"
+          Id="Package\Cargar Información Referencial"
+          TopLeft="160.5,196.5" />
+        <NodeLayout
+          Size="153,42"
+          Id="Package\Creación Tablas"
+          TopLeft="197.5,99.5" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="275.5,238.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,41.5"
+              Start="0,0"
+              End="0,34">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[{E4B46E0D-BC5B-4A93-8D45-BE9BDDBB4B32\}]"
+          TopLeft="273.75,141.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,55"
+              Start="0,0"
+              End="0,47.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,47.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Cargar Información Referencial">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="187,42"
+          Id="Package\Cargar Información Referencial\Destination 1 - Machos"
+          TopLeft="9.50000000000006,259.5" />
+        <NodeLayout
+          Size="172,42"
+          Id="Package\Cargar Información Referencial\Source 1 - Machos$"
+          TopLeft="13.0000000000001,5.5" />
+        <NodeLayout
+          Size="182,42"
+          Id="Package\Cargar Información Referencial\Destination 2 - Mixtos"
+          TopLeft="244,260.5" />
+        <NodeLayout
+          Size="120,42"
+          Id="Package\Cargar Información Referencial\LookupH"
+          TopLeft="527.5,182.5" />
+        <NodeLayout
+          Size="167,42"
+          Id="Package\Cargar Información Referencial\Source 2 - Mixtos$"
+          TopLeft="260.5,5.49999999999989" />
+        <NodeLayout
+          Size="178,42"
+          Id="Package\Cargar Información Referencial\Transformar DatosMi"
+          TopLeft="264,86" />
+        <NodeLayout
+          Size="174,42"
+          Id="Package\Cargar Información Referencial\Transformar DatosH"
+          TopLeft="515.5,88.5" />
+        <NodeLayout
+          Size="121,42"
+          Id="Package\Cargar Información Referencial\LookupM"
+          TopLeft="49,177" />
+        <NodeLayout
+          Size="169,42"
+          Id="Package\Cargar Información Referencial\Source - Hembras$"
+          TopLeft="503.5,5.49999999999989" />
+        <NodeLayout
+          Size="175,42"
+          Id="Package\Cargar Información Referencial\Transformar DatosM"
+          TopLeft="37,83" />
+        <NodeLayout
+          Size="124,42"
+          Id="Package\Cargar Información Referencial\LookupMi"
+          TopLeft="276,180" />
+        <NodeLayout
+          Size="184,42"
+          Id="Package\Cargar Información Referencial\Destination - Hembras"
+          TopLeft="494,257.5" />
+        <EdgeLayout
+          Id="Package\Cargar Información Referencial.Paths[Lookup No Match Output1]"
+          TopLeft="336.5,222">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,38.5"
+              Start="0,0"
+              End="0,31">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-55.80638671875,9.6953125,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Cargar Información Referencial.Paths[Lookup No Match Output]"
+          TopLeft="106.25,219">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,40.5"
+              Start="0,0"
+              End="0,33">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-55.80638671875,10.6953125,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Cargar Información Referencial.Paths[Excel Source Output2]"
+          TopLeft="588,47.4999999999999">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="14.5,41.0000000000001"
+              Start="0,0"
+              End="14.5,33.5000000000001">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.5000000000001" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.5000000000001"
+                    Point2="0,20.5000000000001"
+                    Point3="4,20.5000000000001" />
+                  <mssgle:LineSegment
+                    End="10.5,20.5000000000001" />
+                  <mssgle:CubicBezierSegment
+                    Point1="10.5,20.5000000000001"
+                    Point2="14.5,20.5000000000001"
+                    Point3="14.5,24.5000000000001" />
+                  <mssgle:LineSegment
+                    End="14.5,33.5000000000001" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Cargar Información Referencial.Paths[Excel Source Output1]"
+          TopLeft="344,47.4999999999999">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="9,38.5000000000001"
+              Start="0,0"
+              End="9,31.0000000000001">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.2500000000001" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,15.2500000000001"
+                    Point2="0,19.2500000000001"
+                    Point3="4,19.2500000000001" />
+                  <mssgle:LineSegment
+                    End="5,19.2500000000001" />
+                  <mssgle:CubicBezierSegment
+                    Point1="5,19.2500000000001"
+                    Point2="9,19.2500000000001"
+                    Point3="9,23.2500000000001" />
+                  <mssgle:LineSegment
+                    End="9,31.0000000000001" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Cargar Información Referencial.Paths[Excel Source Output]"
+          TopLeft="99.0000000000001,47.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="25.4999999999999,35.5"
+              Start="0,0"
+              End="25.4999999999999,28">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,13.75" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,13.75"
+                    Point2="0,17.75"
+                    Point3="4,17.75" />
+                  <mssgle:LineSegment
+                    End="21.4999999999999,17.75" />
+                  <mssgle:CubicBezierSegment
+                    Point1="21.4999999999999,17.75"
+                    Point2="25.4999999999999,17.75"
+                    Point3="25.4999999999999,21.75" />
+                  <mssgle:LineSegment
+                    End="25.4999999999999,28" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Cargar Información Referencial.Paths[Data Conversion Output2]"
+          TopLeft="602.5,130.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-15,52"
+              Start="0,0"
+              End="-15,44.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,22"
+                    Point2="0,26"
+                    Point3="-4,26" />
+                  <mssgle:LineSegment
+                    End="-11,26" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-11,26"
+                    Point2="-15,26"
+                    Point3="-15,30" />
+                  <mssgle:LineSegment
+                    End="-15,44.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Cargar Información Referencial.Paths[Data Conversion Output1]"
+          TopLeft="353,128">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-15,52"
+              Start="0,0"
+              End="-15,44.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,22"
+                    Point2="0,26"
+                    Point3="-4,26" />
+                  <mssgle:LineSegment
+                    End="-11,26" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-11,26"
+                    Point2="-15,26"
+                    Point3="-15,30" />
+                  <mssgle:LineSegment
+                    End="-15,44.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Cargar Información Referencial.Paths[Data Conversion Output]"
+          TopLeft="124.5,125">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-15,52"
+              Start="0,0"
+              End="-15,44.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,22"
+                    Point2="0,26"
+                    Point3="-4,26" />
+                  <mssgle:LineSegment
+                    End="-11,26" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-11,26"
+                    Point2="-15,26"
+                    Point3="-15,30" />
+                  <mssgle:LineSegment
+                    End="-15,44.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Cargar Información Referencial.Paths[Lookup No Match Output2]"
+          TopLeft="586.75,224.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,33"
+              Start="0,0"
+              End="0,25.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-55.80638671875,6.9453125,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Cargar Información Referencial\LookupH">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[Hembras]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Cargar Información Referencial\Source 2 - Mixtos$">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Cargar Información Referencial\LookupMi">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[Mixtos]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Cargar Información Referencial\Source 1 - Machos$">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Cargar Información Referencial\Source - Hembras$">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Cargar Información Referencial\LookupM">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[Machos]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Cargar Información Referencial\Destination - Hembras">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Cargar Información Referencial\Destination 1 - Machos">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Cargar Información Referencial\Destination 2 - Mixtos">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,1360 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="2/25/2016 3:00:15 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="PORT019"
+  DTS:CreatorName="LOGICSTUDIO\glayedra"
+  DTS:Description="SSIS Package Description"
+  DTS:DTSID="{7B36CD95-3DE7-422F-803A-CC16AFBBDA22}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="12.0.4100.1"
+  DTS:LocaleID="3082"
+  DTS:MaxErrorCount="0"
+  DTS:ObjectName="Datos migracion"
+  DTS:VersionBuild="13"
+  DTS:VersionGUID="{6577E075-27DA-4604-ADBE-1C50184094FC}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{BD262622-D879-4BA4-9672-D029D83A588E}"
+      DTS:ObjectName="DestinationConnectionOLEDB">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=192.168.30.2\SRVBDMEGAAVES;Initial Catalog=MigracionMegaAves;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=false;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SourceConnectionExcel]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{8FFE485D-25FF-446E-83EC-B3306F965DE8}"
+      DTS:ObjectName="SourceConnectionExcel">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\DeployMegaAvesBI\Produccion\Campos Migración.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Data Flow Task 1"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{E47748C9-4816-4895-AB61-F2B7CEF29146}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:FailPackageOnFailure="True"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data Flow Task 1"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          defaultBufferSize="3145728"
+          version="1">
+          <components>
+            <component
+              refId="Package\Data Flow Task 1\Destination - DatosMigracion"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Destination - DatosMigracion"
+              usesDispositions="true"
+              validateExternalMetadata="False"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[DatosMigracion]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task 1\Destination - DatosMigracion.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+                  connectionManagerRefId="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[Galpon]"
+                      cachedDataType="r8"
+                      cachedName="Galpon"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[Galpon]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Galpon]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[Año]"
+                      cachedDataType="r8"
+                      cachedName="Año"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[Año]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Año]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[Lote]"
+                      cachedDataType="r8"
+                      cachedName="Lote"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[Lote]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Lote]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[Edad]"
+                      cachedDataType="r8"
+                      cachedName="Edad"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[Edad]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Edad]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[Fecha]"
+                      cachedDataType="date"
+                      cachedName="Fecha"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[Fecha]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Fecha]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[Peso Machos]"
+                      cachedDataType="r8"
+                      cachedName="Peso Machos"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[Peso Machos]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Peso Machos]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[Peso Hembras]"
+                      cachedDataType="r8"
+                      cachedName="Peso Hembras"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[Peso Hembras]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Peso Hembras]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[TEMP#]"
+                      cachedDataType="r8"
+                      cachedName="TEMP#"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[TEMP#]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[TEMP#]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[MAX]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="MAX"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[MAX]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[MAX]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[MIN]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="MIN"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[MIN]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[MIN]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[C#V#]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="C#V#"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[C#V#]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[C#V#]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[HOBO T#MAX]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="HOBO T#MAX"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[HOBO T#MAX]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[HOBO T#MAX]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[HOBO T#MIN]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="HOBO T#MIN"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[HOBO T#MIN]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[HOBO T#MIN]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[M2 PISO]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="M2 PISO"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[M2 PISO]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[M2 PISO]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[M2 PAPEL]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="M2 PAPEL"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[M2 PAPEL]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[M2 PAPEL]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[FUGAS GALPON S)  SI  N) NO]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="FUGAS GALPON S)  SI  N) NO"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[FUGAS GALPON S)  SI  N) NO]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[FUGAS GALPON S)  SI  N) NO]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[Consumo de gas]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Consumo de gas"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[Consumo de gas]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Consumo de gas]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[Humedad relativa]"
+                      cachedDataType="r8"
+                      cachedName="Humedad relativa"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[Humedad relativa]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Humedad relativa]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[calidad de cama]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="calidad de cama"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[calidad de cama]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[calidad de cama]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[     Nº CRIADORAS    ]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="     Nº CRIADORAS    "
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[     Nº CRIADORAS    ]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[     Nº CRIADORAS    ]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[CIELO RASO %  ABERTURA]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="CIELO RASO %  ABERTURA"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[CIELO RASO %  ABERTURA]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[CIELO RASO %  ABERTURA]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[PP) PAPEL AL PISO                     CB) Nº COME BABY]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="PP) PAPEL AL PISO                     CB) Nº COME BABY"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[PP) PAPEL AL PISO                     CB) Nº COME BABY]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[PP) PAPEL AL PISO                     CB) Nº COME BABY]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[ALTURA DE COMEDEROS        1) MUY BUENA         2) BUENA        ]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="ALTURA DE COMEDEROS        1) MUY BUENA         2) BUENA        "
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[ALTURA DE COMEDEROS        1) MUY BUENA         2) BUENA        ]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[ALTURA DE COMEDEROS        1) MUY BUENA         2) BUENA        ]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[1) MUY BUENA         2) BUENA                  3) MALA          ]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="1) MUY BUENA         2) BUENA                  3) MALA          "
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[1) MUY BUENA         2) BUENA                  3) MALA          ]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[1) MUY BUENA         2) BUENA                  3) MALA          ]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[PROGRAMA DE LUZ       HORARIOS]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="PROGRAMA DE LUZ       HORARIOS"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[PROGRAMA DE LUZ       HORARIOS]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[PROGRAMA DE LUZ       HORARIOS]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[LECTURAS AGUA]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="LECTURAS AGUA"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[LECTURAS AGUA]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[LECTURAS AGUA]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[CONSUMO DE AGUA            LITROS]"
+                      cachedDataType="r8"
+                      cachedName="CONSUMO DE AGUA            LITROS"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[CONSUMO DE AGUA            LITROS]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[CONSUMO DE AGUA            LITROS]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[Cloro 1er# Bebedero  ppm]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Cloro 1er# Bebedero  ppm"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[Cloro 1er# Bebedero  ppm]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Cloro 1er# Bebedero  ppm]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[Cloro ultimo bebedero ppm]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Cloro ultimo bebedero ppm"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[Cloro ultimo bebedero ppm]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Cloro ultimo bebedero ppm]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[FUMIGACIONES]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="FUMIGACIONES"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[FUMIGACIONES]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[FUMIGACIONES]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[Observaciones se anota resultados de necropsias, ampliaciones y ]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Observaciones se anota resultados de necropsias, ampliaciones y "
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[Observaciones se anota resultados de necropsias, ampliaciones y ]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Observaciones se anota resultados de necropsias, ampliaciones y ]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].Columns[COSTO REFERENTE AL DIA]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="COSTO REFERENTE AL DIA"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[COSTO REFERENTE AL DIA]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[COSTO REFERENTE AL DIA]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[Galpon]"
+                      dataType="r8"
+                      name="Galpon" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[Año]"
+                      dataType="r8"
+                      name="Año" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[Lote]"
+                      dataType="r8"
+                      name="Lote" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[Edad]"
+                      dataType="r8"
+                      name="Edad" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[Fecha]"
+                      dataType="dbTimeStamp"
+                      name="Fecha" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[Peso Machos]"
+                      dataType="r8"
+                      name="Peso Machos" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[Peso Hembras]"
+                      dataType="r8"
+                      name="Peso Hembras" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[TEMP#]"
+                      dataType="r8"
+                      name="TEMP#" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[MAX]"
+                      dataType="wstr"
+                      length="255"
+                      name="MAX" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[MIN]"
+                      dataType="wstr"
+                      length="255"
+                      name="MIN" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[C#V#]"
+                      dataType="wstr"
+                      length="255"
+                      name="C#V#" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[HOBO T#MAX]"
+                      dataType="wstr"
+                      length="255"
+                      name="HOBO T#MAX" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[HOBO T#MIN]"
+                      dataType="wstr"
+                      length="255"
+                      name="HOBO T#MIN" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[M2 PISO]"
+                      dataType="wstr"
+                      length="255"
+                      name="M2 PISO" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[M2 PAPEL]"
+                      dataType="wstr"
+                      length="255"
+                      name="M2 PAPEL" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[FUGAS GALPON S)  SI  N) NO]"
+                      dataType="wstr"
+                      length="255"
+                      name="FUGAS GALPON S)  SI  N) NO" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[Consumo de gas]"
+                      dataType="wstr"
+                      length="255"
+                      name="Consumo de gas" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[Humedad relativa]"
+                      dataType="r8"
+                      name="Humedad relativa" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[calidad de cama]"
+                      dataType="wstr"
+                      length="255"
+                      name="calidad de cama" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[     Nº CRIADORAS    ]"
+                      dataType="wstr"
+                      length="255"
+                      name="     Nº CRIADORAS    " />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[CIELO RASO %  ABERTURA]"
+                      dataType="wstr"
+                      length="255"
+                      name="CIELO RASO %  ABERTURA" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[PP) PAPEL AL PISO                     CB) Nº COME BABY]"
+                      dataType="wstr"
+                      length="255"
+                      name="PP) PAPEL AL PISO                     CB) Nº COME BABY" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[ALTURA DE COMEDEROS        1) MUY BUENA         2) BUENA        ]"
+                      dataType="wstr"
+                      length="255"
+                      name="ALTURA DE COMEDEROS        1) MUY BUENA         2) BUENA        " />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[1) MUY BUENA         2) BUENA                  3) MALA          ]"
+                      dataType="wstr"
+                      length="255"
+                      name="1) MUY BUENA         2) BUENA                  3) MALA          " />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[PROGRAMA DE LUZ       HORARIOS]"
+                      dataType="wstr"
+                      length="255"
+                      name="PROGRAMA DE LUZ       HORARIOS" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[LECTURAS AGUA]"
+                      dataType="wstr"
+                      length="255"
+                      name="LECTURAS AGUA" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[CONSUMO DE AGUA            LITROS]"
+                      dataType="r8"
+                      name="CONSUMO DE AGUA            LITROS" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[Cloro 1er# Bebedero  ppm]"
+                      dataType="wstr"
+                      length="255"
+                      name="Cloro 1er# Bebedero  ppm" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[Cloro ultimo bebedero ppm]"
+                      dataType="wstr"
+                      length="255"
+                      name="Cloro ultimo bebedero ppm" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[MEDICACIONES) COLOR AZUL                  VACUNACION) COLOR ROJO]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="MEDICACIONES) COLOR AZUL                  VACUNACION) COLOR ROJO" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[FUMIGACIONES]"
+                      dataType="wstr"
+                      length="255"
+                      name="FUMIGACIONES" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[Observaciones se anota resultados de necropsias, ampliaciones y ]"
+                      dataType="wstr"
+                      length="255"
+                      name="Observaciones se anota resultados de necropsias, ampliaciones y " />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[COSTO REFERENTE AL DIA]"
+                      dataType="wstr"
+                      length="255"
+                      name="COSTO REFERENTE AL DIA" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input].ExternalColumns[idDetalle]"
+                      dataType="i4"
+                      name="idDetalle" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task 1\Destination - DatosMigracion.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Destination - DatosMigracion.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Destination - DatosMigracion.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Destination - DatosMigracion.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task 1\Source - Hoja1$"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Source - Hoja1$"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">Hoja1$</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task 1\Source - Hoja1$.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SourceConnectionExcel]"
+                  connectionManagerRefId="Package.ConnectionManagers[SourceConnectionExcel]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Galpon]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[Galpon]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Galpon]"
+                      name="Galpon"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Año]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[Año]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Año]"
+                      name="Año"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Lote]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[Lote]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Lote]"
+                      name="Lote"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Edad]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[Edad]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Edad]"
+                      name="Edad"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Fecha]"
+                      dataType="date"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[Fecha]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Fecha]"
+                      name="Fecha"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Peso Machos]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[Peso Machos]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Peso Machos]"
+                      name="Peso Machos"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Peso Hembras]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[Peso Hembras]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Peso Hembras]"
+                      name="Peso Hembras"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[TEMP#]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[TEMP#]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[TEMP#]"
+                      name="TEMP#"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[MAX]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[MAX]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[MAX]"
+                      name="MAX"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[MIN]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[MIN]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[MIN]"
+                      name="MIN"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[C#V#]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[C#V#]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[C#V#]"
+                      name="C#V#"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[HOBO T#MAX]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[HOBO T#MAX]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[HOBO T#MAX]"
+                      name="HOBO T#MAX"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[HOBO T#MIN]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[HOBO T#MIN]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[HOBO T#MIN]"
+                      name="HOBO T#MIN"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[M2 PISO]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[M2 PISO]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[M2 PISO]"
+                      name="M2 PISO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[M2 PAPEL]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[M2 PAPEL]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[M2 PAPEL]"
+                      name="M2 PAPEL"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[FUGAS GALPON S)  SI  N) NO]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[FUGAS GALPON S)  SI  N) NO]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[FUGAS GALPON S)  SI  N) NO]"
+                      name="FUGAS GALPON S)  SI  N) NO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Consumo de gas]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[Consumo de gas]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Consumo de gas]"
+                      name="Consumo de gas"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Humedad relativa]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[Humedad relativa]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Humedad relativa]"
+                      name="Humedad relativa"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[calidad de cama]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[calidad de cama]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[calidad de cama]"
+                      name="calidad de cama"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[     Nº CRIADORAS    ]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[     Nº CRIADORAS    ]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[     Nº CRIADORAS    ]"
+                      name="     Nº CRIADORAS    "
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[CIELO RASO %  ABERTURA]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[CIELO RASO %  ABERTURA]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[CIELO RASO %  ABERTURA]"
+                      name="CIELO RASO %  ABERTURA"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[PP) PAPEL AL PISO                     CB) Nº COME BABY]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[PP) PAPEL AL PISO                     CB) Nº COME BABY]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[PP) PAPEL AL PISO                     CB) Nº COME BABY]"
+                      name="PP) PAPEL AL PISO                     CB) Nº COME BABY"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[ALTURA DE COMEDEROS        1) MUY BUENA         2) BUENA        ]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[ALTURA DE COMEDEROS        1) MUY BUENA         2) BUENA        ]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[ALTURA DE COMEDEROS        1) MUY BUENA         2) BUENA        ]"
+                      name="ALTURA DE COMEDEROS        1) MUY BUENA         2) BUENA        "
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[1) MUY BUENA         2) BUENA                  3) MALA          ]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[1) MUY BUENA         2) BUENA                  3) MALA          ]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[1) MUY BUENA         2) BUENA                  3) MALA          ]"
+                      name="1) MUY BUENA         2) BUENA                  3) MALA          "
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[PROGRAMA DE LUZ       HORARIOS]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[PROGRAMA DE LUZ       HORARIOS]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[PROGRAMA DE LUZ       HORARIOS]"
+                      name="PROGRAMA DE LUZ       HORARIOS"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[LECTURAS AGUA]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[LECTURAS AGUA]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[LECTURAS AGUA]"
+                      name="LECTURAS AGUA"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[CONSUMO DE AGUA            LITROS]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[CONSUMO DE AGUA            LITROS]"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[CONSUMO DE AGUA            LITROS]"
+                      name="CONSUMO DE AGUA            LITROS"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Cloro 1er# Bebedero  ppm]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[Cloro 1er# Bebedero  ppm]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Cloro 1er# Bebedero  ppm]"
+                      name="Cloro 1er# Bebedero  ppm"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Cloro ultimo bebedero ppm]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[Cloro ultimo bebedero ppm]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Cloro ultimo bebedero ppm]"
+                      name="Cloro ultimo bebedero ppm"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[FUMIGACIONES]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[FUMIGACIONES]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[FUMIGACIONES]"
+                      name="FUMIGACIONES"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Observaciones se anota resultados de necropsias, ampliaciones y ]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[Observaciones se anota resultados de necropsias, ampliaciones y ]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[Observaciones se anota resultados de necropsias, ampliaciones y ]"
+                      name="Observaciones se anota resultados de necropsias, ampliaciones y "
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[COSTO REFERENTE AL DIA]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[COSTO REFERENTE AL DIA]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].Columns[COSTO REFERENTE AL DIA]"
+                      name="COSTO REFERENTE AL DIA"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[Galpon]"
+                      dataType="r8"
+                      name="Galpon" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[Año]"
+                      dataType="r8"
+                      name="Año" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[Lote]"
+                      dataType="r8"
+                      name="Lote" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[Edad]"
+                      dataType="r8"
+                      name="Edad" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[Fecha]"
+                      dataType="date"
+                      name="Fecha" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[Peso Machos]"
+                      dataType="r8"
+                      name="Peso Machos" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[Peso Hembras]"
+                      dataType="r8"
+                      name="Peso Hembras" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[TEMP#]"
+                      dataType="r8"
+                      name="TEMP#" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[MAX]"
+                      dataType="wstr"
+                      length="255"
+                      name="MAX" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[MIN]"
+                      dataType="wstr"
+                      length="255"
+                      name="MIN" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[C#V#]"
+                      dataType="wstr"
+                      length="255"
+                      name="C#V#" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[HOBO T#MAX]"
+                      dataType="wstr"
+                      length="255"
+                      name="HOBO T#MAX" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[HOBO T#MIN]"
+                      dataType="wstr"
+                      length="255"
+                      name="HOBO T#MIN" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[M2 PISO]"
+                      dataType="wstr"
+                      length="255"
+                      name="M2 PISO" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[M2 PAPEL]"
+                      dataType="wstr"
+                      length="255"
+                      name="M2 PAPEL" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[FUGAS GALPON S)  SI  N) NO]"
+                      dataType="wstr"
+                      length="255"
+                      name="FUGAS GALPON S)  SI  N) NO" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[Consumo de gas]"
+                      dataType="wstr"
+                      length="255"
+                      name="Consumo de gas" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[Humedad relativa]"
+                      dataType="r8"
+                      name="Humedad relativa" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[calidad de cama]"
+                      dataType="wstr"
+                      length="255"
+                      name="calidad de cama" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[     Nº CRIADORAS    ]"
+                      dataType="wstr"
+                      length="255"
+                      name="     Nº CRIADORAS    " />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[CIELO RASO %  ABERTURA]"
+                      dataType="wstr"
+                      length="255"
+                      name="CIELO RASO %  ABERTURA" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[PP) PAPEL AL PISO                     CB) Nº COME BABY]"
+                      dataType="wstr"
+                      length="255"
+                      name="PP) PAPEL AL PISO                     CB) Nº COME BABY" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[ALTURA DE COMEDEROS        1) MUY BUENA         2) BUENA        ]"
+                      dataType="wstr"
+                      length="255"
+                      name="ALTURA DE COMEDEROS        1) MUY BUENA         2) BUENA        " />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[1) MUY BUENA         2) BUENA                  3) MALA          ]"
+                      dataType="wstr"
+                      length="255"
+                      name="1) MUY BUENA         2) BUENA                  3) MALA          " />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[PROGRAMA DE LUZ       HORARIOS]"
+                      dataType="wstr"
+                      length="255"
+                      name="PROGRAMA DE LUZ       HORARIOS" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[LECTURAS AGUA]"
+                      dataType="wstr"
+                      length="255"
+                      name="LECTURAS AGUA" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[CONSUMO DE AGUA            LITROS]"
+                      dataType="r8"
+                      name="CONSUMO DE AGUA            LITROS" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[Cloro 1er# Bebedero  ppm]"
+                      dataType="wstr"
+                      length="255"
+                      name="Cloro 1er# Bebedero  ppm" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[Cloro ultimo bebedero ppm]"
+                      dataType="wstr"
+                      length="255"
+                      name="Cloro ultimo bebedero ppm" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[MEDICACIONES) COLOR AZUL                  VACUNACION) COLOR ROJO]"
+                      dataType="wstr"
+                      length="255"
+                      name="MEDICACIONES) COLOR AZUL                  VACUNACION) COLOR ROJO" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[FUMIGACIONES]"
+                      dataType="wstr"
+                      length="255"
+                      name="FUMIGACIONES" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[Observaciones se anota resultados de necropsias, ampliaciones y ]"
+                      dataType="wstr"
+                      length="255"
+                      name="Observaciones se anota resultados de necropsias, ampliaciones y " />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output].ExternalColumns[COSTO REFERENTE AL DIA]"
+                      dataType="wstr"
+                      length="255"
+                      name="COSTO REFERENTE AL DIA" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[Galpon]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[Galpon]"
+                      name="Galpon" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[Año]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[Año]"
+                      name="Año" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[Lote]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[Lote]"
+                      name="Lote" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[Edad]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[Edad]"
+                      name="Edad" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[Fecha]"
+                      dataType="date"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[Fecha]"
+                      name="Fecha" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[Peso Machos]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[Peso Machos]"
+                      name="Peso Machos" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[Peso Hembras]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[Peso Hembras]"
+                      name="Peso Hembras" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[TEMP#]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[TEMP#]"
+                      name="TEMP#" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[MAX]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[MAX]"
+                      name="MAX" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[MIN]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[MIN]"
+                      name="MIN" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[C#V#]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[C#V#]"
+                      name="C#V#" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[HOBO T#MAX]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[HOBO T#MAX]"
+                      name="HOBO T#MAX" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[HOBO T#MIN]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[HOBO T#MIN]"
+                      name="HOBO T#MIN" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[M2 PISO]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[M2 PISO]"
+                      name="M2 PISO" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[M2 PAPEL]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[M2 PAPEL]"
+                      name="M2 PAPEL" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[FUGAS GALPON S)  SI  N) NO]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[FUGAS GALPON S)  SI  N) NO]"
+                      name="FUGAS GALPON S)  SI  N) NO" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[Consumo de gas]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[Consumo de gas]"
+                      name="Consumo de gas" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[Humedad relativa]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[Humedad relativa]"
+                      name="Humedad relativa" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[calidad de cama]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[calidad de cama]"
+                      name="calidad de cama" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[     Nº CRIADORAS    ]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[     Nº CRIADORAS    ]"
+                      name="     Nº CRIADORAS    " />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[CIELO RASO %  ABERTURA]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[CIELO RASO %  ABERTURA]"
+                      name="CIELO RASO %  ABERTURA" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[PP) PAPEL AL PISO                     CB) Nº COME BABY]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[PP) PAPEL AL PISO                     CB) Nº COME BABY]"
+                      name="PP) PAPEL AL PISO                     CB) Nº COME BABY" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[ALTURA DE COMEDEROS        1) MUY BUENA         2) BUENA        ]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[ALTURA DE COMEDEROS        1) MUY BUENA         2) BUENA        ]"
+                      name="ALTURA DE COMEDEROS        1) MUY BUENA         2) BUENA        " />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[1) MUY BUENA         2) BUENA                  3) MALA          ]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[1) MUY BUENA         2) BUENA                  3) MALA          ]"
+                      name="1) MUY BUENA         2) BUENA                  3) MALA          " />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[PROGRAMA DE LUZ       HORARIOS]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[PROGRAMA DE LUZ       HORARIOS]"
+                      name="PROGRAMA DE LUZ       HORARIOS" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[LECTURAS AGUA]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[LECTURAS AGUA]"
+                      name="LECTURAS AGUA" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[CONSUMO DE AGUA            LITROS]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[CONSUMO DE AGUA            LITROS]"
+                      name="CONSUMO DE AGUA            LITROS" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[Cloro 1er# Bebedero  ppm]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[Cloro 1er# Bebedero  ppm]"
+                      name="Cloro 1er# Bebedero  ppm" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[Cloro ultimo bebedero ppm]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[Cloro ultimo bebedero ppm]"
+                      name="Cloro ultimo bebedero ppm" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[FUMIGACIONES]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[FUMIGACIONES]"
+                      name="FUMIGACIONES" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[Observaciones se anota resultados de necropsias, ampliaciones y ]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[Observaciones se anota resultados de necropsias, ampliaciones y ]"
+                      name="Observaciones se anota resultados de necropsias, ampliaciones y " />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[COSTO REFERENTE AL DIA]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[COSTO REFERENTE AL DIA]"
+                      name="COSTO REFERENTE AL DIA" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data Flow Task 1.Paths[Excel Source Output]"
+              endId="Package\Data Flow Task 1\Destination - DatosMigracion.Inputs[Destination Input]"
+              name="Excel Source Output"
+              startId="Package\Data Flow Task 1\Source - Hoja1$.Outputs[Excel Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="160,42"
+          Id="Package\Data Flow Task 1"
+          TopLeft="20.5,107.5" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Data Flow Task 1">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="214,42"
+          Id="Package\Data Flow Task 1\Destination - DatosMigracion"
+          TopLeft="5.50000000000001,107.5" />
+        <NodeLayout
+          Size="155,42"
+          Id="Package\Data Flow Task 1\Source - Hoja1$"
+          TopLeft="35,5.5" />
+        <EdgeLayout
+          Id="Package\Data Flow Task 1.Paths[Excel Source Output]"
+          TopLeft="112.5,47.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task 1\Destination - DatosMigracion">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task 1\Source - Hoja1$">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
